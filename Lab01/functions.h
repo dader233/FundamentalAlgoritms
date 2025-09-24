@@ -1,0 +1,12 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+#include <stdbool.h>
+
+int strInt(char *number);
+
+bool numbFormat(char *number);
+
+int hFlag(int* resultArray, const int number);
+int pFlag(const int number);
+int sFlag(char* resultArray, const int number);
+#endif
