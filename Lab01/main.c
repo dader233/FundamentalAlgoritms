@@ -114,7 +114,6 @@ int main(int argc, char* argv[]){
         }
         long long int result = aFlag(number);
         printf("%lld\n", result);
-        
     }
     else if(strcmp(flag,"-f") == 0 || strcmp(flag, "/f") == 0){
         if (number <= 0){
