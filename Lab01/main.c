@@ -8,7 +8,8 @@
 enum{
     WRONG_NUMBER_FORMAT,
     MALLOC_FAULT,
-    WRONG_NUMBER_SIZE
+    WRONG_NUMBER_SIZE,
+    FLAG_ERROR
 };
 
 int main(int argc, char* argv[]){
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]){
     char* flag = argv[2];
 
     if (!numbFormat(numberChar)){
-        printf("WRONG NUMBER FORMAT");
+        printf("WRONG NUMBER FORMAT\n");
         return WRONG_NUMBER_FORMAT;
     }
     
@@ -42,7 +43,7 @@ int main(int argc, char* argv[]){
 
         }
         else{
-            printf("No such numbers");
+            printf("No such numbers.\n");
         }
         printf("\n");
         free(massInt);
@@ -126,6 +127,10 @@ int main(int argc, char* argv[]){
             return WRONG_NUMBER_SIZE;
         }
         printf("%lld\n", result);
+    }
+    else{
+        printf("Enter correct flag.\n");
+        return FLAG_ERROR;
     }
     return 0;
 }
