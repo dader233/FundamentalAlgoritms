@@ -87,3 +87,26 @@ int sFlag(char* resultArray, const int number){
     return posArray + 1;
 }
     
+void eFlag(long long **resultArray, const int number){
+    long long temp;
+    for (int i = 0; i<10; i++){
+        temp = 1;
+        for (int j = 0; j < number; j++){
+            temp *= (i + 1);
+            resultArray[i][j] = temp;
+        }
+    }
+}
+
+long long aFlag(const int number){
+    long long result = (1 + number) * number / 2;
+    return result;
+}
+
+long long fFlag(const int number){
+    long long result = 1;
+    for (int i = 2; i <= number; i++){
+        result *= i;
+    }
+    return result;
+}

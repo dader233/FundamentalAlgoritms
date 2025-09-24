@@ -61,3 +61,5 @@ configure
 *.pdf
 *.doc
 *.docxoutput/
+output/
+output/
