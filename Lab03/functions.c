@@ -59,7 +59,7 @@ int mFlag(int a, int b){
 }
 
 int tFlag(double eps, double a, double b, double c){
-    if(fabs(a) < eps || fabs(c) < eps || fabs(c) < eps){
+    if(fabs(a) < eps || fabs(b) < eps || fabs(c) < eps){
         return -1;
     }
     else if( a > eps && b > eps && c > eps){
