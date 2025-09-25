@@ -50,6 +50,9 @@ void printEquasion(double eps, double a, double b, double c, double result[3]){
 }
 
 int mFlag(int a, int b){
+    if (b == 0){
+        return -1;
+    }
     if(a % b == 0){
         return 1;
     }
