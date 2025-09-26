@@ -5,9 +5,10 @@
 #include <string.h>
 
 enum{
+    SUCCESS,
     WRONG_ARGUMENTS,
     WRONG_FORMAT_NUMBER,
-    ERROR
+    WRONG_FLAG
 };
 
 int main(int argc, char* argv[]){
@@ -109,5 +110,9 @@ int main(int argc, char* argv[]){
         }
 
     }
-    return 0;
+    else{
+        printf("WRONG FLAG!\n");
+        return WRONG_FLAG;
+    }
+    return SUCCESS;
 }
