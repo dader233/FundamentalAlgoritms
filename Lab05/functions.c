@@ -7,7 +7,7 @@ int strInt(char *number){
     bool negative = false;
     int value = 0;
     if (*number == '-'){
-        if (!negative){
+        if (negative){
             negative = true;
             ++number;
         }
