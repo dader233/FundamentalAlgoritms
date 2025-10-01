@@ -1,10 +1,18 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <math.h>
+#include <stdbool.h>
+#include <string.h>
 
+enum{
+    SUCCESS,
+    WRONG_ARGUMENTS,
+    WRONG_FORMAT_NUMBER,
+    WRONG_FLAG
+};
 double eLim(const double precision);
 double eRyad(const double precision);
 double eEquation(const double precision);
