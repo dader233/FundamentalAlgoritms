@@ -1,15 +1,25 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
-int strInt(char *number);
+enum{
+    SUCCESS,
+    WRONG_ARGUMENTS,
+    MALLOC_FAULT,
+    WRONG_NUMBER_SIZE,
+    ERROR_FILE,
+    FLAG_ERROR
+};
 
-bool numbFormat(char *number);
+void dFlag(FILE* fileInput, FILE* fileOutput);
+void iFlag(FILE* fileInput, FILE* fileOutput);
+void sFlag(FILE* fileInput, FILE* fileOutput);
+void aFlag(FILE* fileInput, FILE* fileOutput);
+int asciiHex (int ascii, char * array, int maxSize);
 
-int hFlag(int* resultArray, const int number);
-int pFlag(const int number);
-int sFlag(char* resultArray, const int number);
-void eFlag(long long **resultArray, const int number);
-long long aFlag(const int number);
-long long fFlag(const int number);
 #endif
