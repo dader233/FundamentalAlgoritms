@@ -12,6 +12,8 @@ int minSysCalc(char * word, int len){
             curSysCalc = (c - 'a') + 11;
         } else if (c >= 'A' && c <= 'Z'){
             curSysCalc = (c - 'A') + 11;
+        } else if (c == '-' && i == 0 && len > 1){
+            continue;
         }
         else{
             return WRONG_NUMBER_FORMAT;
@@ -28,8 +30,20 @@ long long anyToDes(char * word, int length, int sysCalc){
     int degree = 0;
     char c;
     int desC;
+    int negativeFlag = 1;
     for (int i = 0; i < length; i++){
         c = word[i];
+        if (c == '-' && i == 0){
+            if (negativeFlag == -1 || length == 1 ){
+                return WRONG_NUMBER_FORMAT;
+            }
+            else {
+                negativeFlag = -1;
+                continue;
+            }
+        } else if(c == '-' && i != 0){
+            return WRONG_NUMBER_FORMAT;
+        }
         if (c >= '0' && c <= '9'){
             desC = (c - '0');
         } else if (c >= 'a' && c <= 'z'){
@@ -42,7 +56,7 @@ long long anyToDes(char * word, int length, int sysCalc){
     if (result < 0){
         return WRONG_NUMBER_SIZE;
     }
-    return result;
+    return result * negativeFlag;
 }
 
 void printNumber(char *number, int length, FILE *fileOutput) {
