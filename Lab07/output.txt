@@ -1,0 +1,24 @@
+Entered number: 123243
+Min system of calculation: 5
+In decimal system: 4823
+------------------------------
+Entered number: AFGR5
+Min system of calculation: 28
+In decimal system: 6489145
+------------------------------
+Entered number: 473
+Min system of calculation: 8
+In decimal system: 315
+------------------------------
+Entered number: 6
+Min system of calculation: 7
+In decimal system: 6
+------------------------------
+Entered number: 0
+Min system of calculation: 2
+In decimal system: 0
+------------------------------
+Entered number: A000
+Min system of calculation: 11
+In decimal system: 13310
+------------------------------
