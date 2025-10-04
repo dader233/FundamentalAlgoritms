@@ -62,26 +62,29 @@ int qFlagHandle(int argc, char* argv[]){
         return WRONG_FORMAT_NUMBER;
     }
     
-    double result_1[3];
-    double result_2[3];
-    double result_3[3];
-    double result_4[3];
-    double result_5[3];
-    double result_6[3];
-
-    qFlagSolve(eps, a, b, c, result_1);
-    qFlagSolve(eps, a, c, b, result_2);
-    qFlagSolve(eps, b, a, c, result_3);
-    qFlagSolve(eps, b, c, a, result_4);
-    qFlagSolve(eps, c, a, b, result_5);
-    qFlagSolve(eps, c, b, a, result_6);  
-
-    printEquasion(eps, a, b, c, result_1);
-    printEquasion(eps, a, c, b, result_2);
-    printEquasion(eps, b, a, c, result_3);
-    printEquasion(eps, b, c, a, result_4);
-    printEquasion(eps, c, a, b, result_5);
-    printEquasion(eps, c, b, a, result_6);
+    double params[6][3] = {
+        {a, b, c}, {a, c, b}, {b, a, c}, 
+        {b, c, a}, {c, a, b}, {c, b, a}
+    };
+    bool isUnique[6] = {true, true, true, true, true, true};
+    
+    for (int i = 0; i < 6; i++) {
+        for (int j = i + 1; j < 6; j++) {
+            if (fabs(params[i][0] - params[j][0]) < eps &&
+                fabs(params[i][1] - params[j][1]) < eps &&
+                fabs(params[i][2] - params[j][2]) < eps) {
+                isUnique[j] = false;
+            }
+        }
+    }
+    
+    for (int i = 0; i < 6; i++) {
+        if (isUnique[i]) {
+            double result[3];
+            qFlagSolve(eps, params[i][0], params[i][1], params[i][2], result);
+            printEquasion(eps, params[i][0], params[i][1], params[i][2], result);
+        }
+    }
     
     return SUCCESS;
 }
@@ -89,25 +92,17 @@ int qFlagHandle(int argc, char* argv[]){
 void qFlagSolve(double eps, double a, double b, double c, double result[3]){
     double d;
     if(fabs(a) < eps){
-        //Линейный
         if (fabs(b) < eps){
-            //Вырожденные
             if(fabs(c) < eps){
                 result[0] = INFINITY;
-                result[1] = INFINITY;
-                result[2] = INFINITY;
             }
             else{
                 result[0] = 0;
-                result[1] = NAN;
-                result[2] = NAN;
             }
         }
         else{
-            //bx + c = 0
             result[0] = 1;
             result[1] = -c / b;
-            result[2] = NAN;
         }
     }
     else{
@@ -115,7 +110,6 @@ void qFlagSolve(double eps, double a, double b, double c, double result[3]){
         if(fabs(d) < eps){
             result[0] = 1;
             result[1] = -b / (2 * a);
-            result[2] = NAN;
         }
         else if(d > eps){
             result[0] = 2;
@@ -124,14 +118,24 @@ void qFlagSolve(double eps, double a, double b, double c, double result[3]){
         }
         else{
             result[0] = 0;
-            result[1] = NAN;
-            result[2] = NAN;
         }
     }
 }
+
 void printEquasion(double eps, double a, double b, double c, double result[3]){
     printf("Equasion: (%.4f)x^2 + (%.4f)x + (%.4f) = 0, eps = %.4f\n", a, b, c, eps);
-    printf("Solutions: count=%.0f, x1=%.4f, x2=%.4f\n\n", result[0], result[1], result[2]);
+    
+    int count = (int)result[0];
+    
+    if (count == INFINITY) {
+        printf("Solutions: Infinite number of solutions\n\n");
+    } else if (count == 0) {
+        printf("Solutions: No real roots\n\n");
+    } else if (count == 1) {
+        printf("Solutions: count=1, x1=%.4f\n\n", result[1]);
+    } else if (count == 2) {
+        printf("Solutions: count=2, x1=%.4f, x2=%.4f\n\n", result[1], result[2]);
+    }
 }
 
 int mFlagHandle(int argc, char* argv[]){
@@ -182,11 +186,16 @@ int tFlagHandle(int argc, char* argv[]){
     }
     
     double eps, a, b, c;
+    
     if(parseArguments(argc, argv, &eps, &a, &b, &c) != SUCCESS){
         return WRONG_FORMAT_NUMBER;
     }
-    
+    if (a < 0 || b < 0 || c < 0){
+        printf("Error: negative numbers.\n");
+        return WRONG_FORMAT_NUMBER;
+    }
     int result = tFlag(eps, a, b, c); 
+    
     if (result == 1){
         printf("The sides %.3f %.3f %.3f are suitable for a right triangle.\n", a, b, c);
         printf("The accuracy is equal to epsilon = %.3f\n", eps);
@@ -213,20 +222,24 @@ int tFlag(double eps, double a, double b, double c){
 
 int parseArguments(int argc, char* argv[], double* eps, double* a, double* b, double* c){
     char *errorChar;
+    double checker = 0.0;
     *eps = strtod(argv[2], &errorChar);
     if (*eps < 0){
         printf("Wrong EPS, can't be less than zero\n");
         return WRONG_ARGUMENTS;
     }
-
+    for(int i = 2; i < 6; i++){
+        checker = strtod(argv[i], &errorChar);
+        if (*errorChar != '\0'){
+            printf("Error in double format of EPS, A, B, C\n");
+            return WRONG_FORMAT_NUMBER;
+        }   
+    }
     *a = strtod(argv[3], &errorChar);
     *b = strtod(argv[4], &errorChar);
     *c = strtod(argv[5], &errorChar);
     
-    if (*errorChar != '\0'){
-        printf("Error in double format of EPS, A, B, C\n");
-        return WRONG_FORMAT_NUMBER;
-    }
+    
     
     return SUCCESS;
 }

@@ -22,7 +22,6 @@ int strInt(char *number){
     if (negative){
         value *= -1;
     }
-
     return value;
 }
 
@@ -61,12 +60,10 @@ int pFlag(const int number){
         }
         return 1;    
     }
-    else if (number >= 0){
+    else if (number <= 1){
         return -1;
     }
-    else{
-       return pFlag(number * -1);
-    }
+    
 }
 
 int sFlag(char* resultArray, const int number){
@@ -104,6 +101,9 @@ long long aFlag(const int number){
 
 long long fFlag(const int number){
     long long result = 1;
+    if (number > 20){
+        return -1;
+    }
     if (number >= 2){    
         for (int i = 2; i <= number; i++){
             result *= i;
@@ -120,6 +120,7 @@ int hFlagHandle(const int number){
     }
     int quantity = hFlag(massInt, number);
     if (quantity != 0){
+        printf("Natural numbers: ");
         for (int i = 0; i<quantity; ++i){
             printf("%d ", massInt[i]);
         }
@@ -135,7 +136,7 @@ int hFlagHandle(const int number){
 int pFlagHandle(const int number){
     int result = pFlag(number);
     if (result == -1){
-        printf("0 or 1 was entered. Not prime and not composite number.\n");
+        printf("1 or below was entered. Not prime and not composite number.\n");
     }
     else if(result == 0){
         printf("%d is composite number.\n", number);
@@ -212,10 +213,11 @@ int fFlagHandle(const int number){
         return WRONG_NUMBER_SIZE;
     }
     long long int result = fFlag(number);
-    if(result == 0){
-        printf("Size too big to count.");
+    if(result <= 0){
+        printf("Size too big to count.\n");
         return WRONG_NUMBER_SIZE;
     }
+    
     printf("%lld\n", result);
     return 0;
 }
