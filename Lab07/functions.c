@@ -87,15 +87,22 @@ int solution(FILE *fileInput, FILE *fileOutput){
     int index = 0;
     int wordI = 0;
     char c;
-    do{
+    
+    while(1){
         c = fgetc(fileInput);
-        if (c == '\n' || c == ' ' || c == '\t'){
+        
+        if (c == '\n' || c == ' ' || c == '\t' || (c == EOF && index > 0)){
             if (index == 0){
+                if (c == EOF){
+                    break;
+                }
                 continue;
             }
+            
             char * word = (char *) malloc(sizeof(char) * (index + 1));
             if (!word){
                 printf("ERROR WITH ALLOCATION MEMORY: MALLOC \n");
+                free(buff);
                 return MALLOC_ERROR;
             }
 
@@ -103,33 +110,35 @@ int solution(FILE *fileInput, FILE *fileOutput){
             for(int i = 0; i < index; i++){
                 word[wordI++] = buff[i];
             }
+            word[wordI] = '\0';
 
             printNumber(word, wordI, fileOutput);
             
-            int sysCalc = minSysCalc(word,wordI);
+            int sysCalc = minSysCalc(word, wordI);
             if (sysCalc == WRONG_NUMBER_FORMAT){
                 fprintf(fileOutput, "WRONG NUMBER FORMAT \n");
-                free(word);
-                continue;
             }
             else{
                 fprintf(fileOutput, "Min system of calculation: %d\n", sysCalc);
+                long long desNumber = anyToDes(word, wordI, sysCalc);
+                if (desNumber == WRONG_NUMBER_FORMAT){
+                    fprintf(fileOutput, "WRONG NUMBER FORMAT \n");
+                } else if (desNumber == WRONG_NUMBER_SIZE){
+                    fprintf(fileOutput, "WRONG NUMBER SIZE \n");
+                } else {
+                    fprintf(fileOutput, "In decimal system: %lld\n", desNumber);
+                }
             }
-
-            long long desNumber = anyToDes(word, wordI,sysCalc);
-            fprintf(fileOutput, "In decimal system: %lld\n", desNumber);
+            
             fprintf(fileOutput, "------------------------------\n");
             free(word);
-            buffLen = 100;
-            char * temp = realloc(buff, sizeof(char) * buffLen);
-            if (!temp){
-                printf("ERROR WITH ALLOCATION MEMORY: MALLOC \n");
-                return MALLOC_ERROR;
-            }
-            buff = temp;
             index = 0;
             
+            if (c == EOF) break;
             continue;
+        }
+        else if (c == EOF){
+            break;
         }
         else{
             if (index == buffLen - 1){
@@ -137,13 +146,15 @@ int solution(FILE *fileInput, FILE *fileOutput){
                 char * temp = realloc(buff, sizeof(char) * buffLen);
                 if (!temp){
                     printf("ERROR WITH ALLOCATION MEMORY: MALLOC \n");
+                    free(buff);
                     return MALLOC_ERROR;
                 }
                 buff = temp;
             }
             buff[index++] = c;
         }
-    } while (c != EOF);
+    }
+    
     free(buff);
     return 0;
-}   
+}

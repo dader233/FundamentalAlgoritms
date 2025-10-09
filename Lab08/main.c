@@ -4,11 +4,15 @@
 int main(){
     int base;
     scanf("%d", &base);
+    if(base < 2 || base > 36){
+        printf("WRONG NUMBERS BASE. BASE CANT BE LESS THAN 2 OR MORE THAN 36 \n");
+        return WRONG_NUMBER_FORMAT;
+    }
     printf("Enter numbers not more than 100 symbols each.    \n");
     int buffSize = 100;
-    int numbSize = 100;
     int numbLen = 0;
     char number[buffSize];
+    char newNumber[buffSize];
     long long maxValue = 0;
     char maxNumber[buffSize];
     maxNumber[0] = '\0';
@@ -17,18 +21,18 @@ int main(){
         if (strcmp(number, "Stop") == 0) {
             break; 
         }
-
-        long long value = anyToDes(number, strlen(number), base);
+        removeZeros(number, newNumber);
+        long long value = anyToDes(newNumber, strlen(newNumber), base);
         if (value == WRONG_NUMBER_FORMAT) {
-            fprintf(stderr, "Error: Wrong number format for '%s'\n", number);
+            fprintf(stderr, "Error: Wrong number format for '%s'\nContinue \n", newNumber);
             continue;
         } else if (value == WRONG_NUMBER_SIZE) {
-            fprintf(stderr, "Error: Number too large '%s'\n", number);
+            fprintf(stderr, "Error: Number too large '%s'\n", newNumber);
             continue;
 }
         if(llabs(value) > llabs(maxValue)){
             maxValue = value;
-            strcpy(maxNumber, number);
+            strcpy(maxNumber, newNumber);
         }
 
     } while(1);

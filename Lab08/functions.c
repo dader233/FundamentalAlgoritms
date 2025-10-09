@@ -1,8 +1,31 @@
 #include "./functions.h"
 
+void removeZeros(char* input, char* output){
+    int negative = 0;
+    int index = 0;
+    int foundNonZero = 0;
+    int len = strlen(input);
+    if (input[0] == '-') {
+        output[index++] = '-';
+        negative = 1;
+    }
+    for (int i = negative; i < len; i++) {
+        if (input[i] != '0') {
+            foundNonZero = 1;
+        }
+        if (foundNonZero) {
+            output[index++] = input[i];
+        }
+    }
+    if (!foundNonZero) {
+        output[0] = '0';
+        index = 1;
+    }
+    output[index] = '\0';
+}
+
 long long anyToDes(char * word, int length, int sysCalc){
     long long result = 0;
-    int degree = 0;
     char c;
     int desC;
     int negativeFlag = 1;
@@ -21,13 +44,19 @@ long long anyToDes(char * word, int length, int sysCalc){
         }
         if (c >= '0' && c <= '9'){
             desC = (c - '0');
-        } else if (c >= 'a' && c <= 'z'){
-            desC = (c - 'a') + 10;
         } else if (c >= 'A' && c <= 'Z'){
             desC = (c - 'A') + 10;
+        } else{
+            return WRONG_NUMBER_FORMAT;
         }
+        
+        if (desC >= sysCalc){
+            return WRONG_NUMBER_FORMAT;
+        }
+        
         result = result * sysCalc + desC;
     }
+    
     if (result < 0){
         return WRONG_NUMBER_SIZE;
     }

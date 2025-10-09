@@ -15,6 +15,10 @@ int main(int argc, char * argv[]){
     double eps;
     char * errorChar;    
     eps = strtod(argv[1], &errorChar);
+    if (*errorChar != '\0'){
+        printf("Error in double format of EPS\n");
+        return WRONG_FORMAT_NUMBER;
+    }   
     if (eps < 0){
         printf("Wrong EPS, can't be less than zero\n");
         return WRONG_ARGUMENTS;
