@@ -15,7 +15,7 @@ enum ErrorCodes {
 };
 
 void removeZeros(char* input, char* output);
-long long anyToDes(char *word, int length, int sysCalc);
+long long anyToDes(char *word, int length, int sysCalc, long long *result);
 void printNumber(char *number, int length);
 char* decToAny(long long num, int base);
 

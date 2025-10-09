@@ -25,8 +25,8 @@ int minSysCalc(char * word, int len){
     return answer;
 }
 
-long long anyToDes(char * word, int length, int sysCalc){
-    long long result = 0;
+long long anyToDes(char * word, int length, int sysCalc, long long *result){
+    *result = 0;
     int degree = 0;
     char c;
     int desC;
@@ -51,12 +51,13 @@ long long anyToDes(char * word, int length, int sysCalc){
         } else if (c >= 'A' && c <= 'Z'){
             desC = (c - 'A') + 10;
         }
-        result = result * sysCalc + desC;
+        *result = *result * sysCalc + desC;
     }
-    if (result < 0){
+    if (*result < 0){
         return WRONG_NUMBER_SIZE;
     }
-    return result * negativeFlag;
+    *result *= negativeFlag;
+    return 0;
 }
 
 void printNumber(char *number, int length, FILE *fileOutput) {
@@ -87,8 +88,9 @@ int solution(FILE *fileInput, FILE *fileOutput){
     int index = 0;
     int wordI = 0;
     char c;
-    
-    while(1){
+    long long result;
+    int status;
+    do{
         c = fgetc(fileInput);
         
         if (c == '\n' || c == ' ' || c == '\t' || (c == EOF && index > 0)){
@@ -120,13 +122,14 @@ int solution(FILE *fileInput, FILE *fileOutput){
             }
             else{
                 fprintf(fileOutput, "Min system of calculation: %d\n", sysCalc);
-                long long desNumber = anyToDes(word, wordI, sysCalc);
-                if (desNumber == WRONG_NUMBER_FORMAT){
+
+                status = anyToDes(word, wordI, sysCalc, &result);
+                if (status == WRONG_NUMBER_FORMAT){
                     fprintf(fileOutput, "WRONG NUMBER FORMAT \n");
-                } else if (desNumber == WRONG_NUMBER_SIZE){
+                } else if (status == WRONG_NUMBER_SIZE){
                     fprintf(fileOutput, "WRONG NUMBER SIZE \n");
                 } else {
-                    fprintf(fileOutput, "In decimal system: %lld\n", desNumber);
+                    fprintf(fileOutput, "In decimal system: %lld\n", result);
                 }
             }
             
@@ -153,7 +156,7 @@ int solution(FILE *fileInput, FILE *fileOutput){
             }
             buff[index++] = c;
         }
-    }
+    } while(c!=EOF);
     
     free(buff);
     return 0;

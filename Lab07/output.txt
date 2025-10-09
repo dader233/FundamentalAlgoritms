@@ -6,7 +6,47 @@ Entered number: 123
 Min system of calculation: 4
 In decimal system: 27
 ------------------------------
-Entered number: 0
+Entered number: 1
+Min system of calculation: 2
+In decimal system: 1
+------------------------------
+Entered number: gh
+Min system of calculation: 18
+In decimal system: 305
+------------------------------
+Entered number: ghh
+Min system of calculation: 18
+In decimal system: 5507
+------------------------------
+Entered number: gj
+Min system of calculation: 20
+In decimal system: 339
+------------------------------
+Entered number: -000
 Min system of calculation: 2
 In decimal system: 0
+------------------------------
+Entered number: -0002
+Min system of calculation: 3
+In decimal system: -2
+------------------------------
+Entered number: -01
+Min system of calculation: 2
+In decimal system: -1
+------------------------------
+Entered number: zghz
+Min system of calculation: 36
+In decimal system: 1654343
+------------------------------
+Entered number: -3456
+Min system of calculation: 7
+In decimal system: -1266
+------------------------------
+Entered number: -0001
+Min system of calculation: 2
+In decimal system: -1
+------------------------------
+Entered number: -000x
+Min system of calculation: 34
+In decimal system: -33
 ------------------------------

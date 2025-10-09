@@ -24,9 +24,9 @@ void removeZeros(char* input, char* output){
     output[index] = '\0';
 }
 
-long long anyToDes(char * word, int length, int sysCalc){
-    long long result = 0;
+long long anyToDes(char * word, int length, int sysCalc, long long *result){
     char c;
+    *result = 0;
     int desC;
     int negativeFlag = 1;
     for (int i = 0; i < length; i++){
@@ -54,13 +54,14 @@ long long anyToDes(char * word, int length, int sysCalc){
             return WRONG_NUMBER_FORMAT;
         }
         
-        result = result * sysCalc + desC;
+        *result = *result * sysCalc + desC;
     }
     
-    if (result < 0){
+    if (*result < 0){
         return WRONG_NUMBER_SIZE;
     }
-    return result * negativeFlag;
+    *result *= negativeFlag;
+    return 0;
 }
 
 void printNumber(char *number, int length) {

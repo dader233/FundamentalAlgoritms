@@ -16,26 +16,29 @@ int main(){
     long long maxValue = 0;
     char maxNumber[buffSize];
     maxNumber[0] = '\0';
+    long long value;
+    long long status;
     do{
         scanf("%s", number);
         if (strcmp(number, "Stop") == 0) {
             break; 
         }
         removeZeros(number, newNumber);
-        long long value = anyToDes(newNumber, strlen(newNumber), base);
-        if (value == WRONG_NUMBER_FORMAT) {
+        long long status = anyToDes(newNumber, strlen(newNumber), base, &value);
+        if (status == WRONG_NUMBER_FORMAT) {
             fprintf(stderr, "Error: Wrong number format for '%s'\nContinue \n", newNumber);
             continue;
-        } else if (value == WRONG_NUMBER_SIZE) {
+        } else if (status == WRONG_NUMBER_SIZE) {
             fprintf(stderr, "Error: Number too large '%s'\n", newNumber);
             continue;
-}
-        if(llabs(value) > llabs(maxValue)){
+        }
+
+        if(llabs(value) >= llabs(maxValue)){
             maxValue = value;
             strcpy(maxNumber, newNumber);
         }
 
-    } while(1);
+    } while(strcmp(number, "Stop") != 0);
 
     if (maxNumber[0] != '\0') {
         char *result9 = decToAny(maxValue, 9);
@@ -46,16 +49,22 @@ int main(){
         char *result18 = decToAny(maxValue, 18);
         if (!result18) {
             printf("Memory allocation error\n");
+            free(result9);
             return MALLOC_ERROR;
         }
         char *result27 = decToAny(maxValue, 27);
         if (!result27) {
             printf("Memory allocation error\n");
+            free(result9);
+            free(result18);
             return MALLOC_ERROR;
         }
         char *result36 = decToAny(maxValue, 36);
         if (!result36) {
             printf("Memory allocation error\n");
+            free(result9);
+            free(result18);
+            free(result27);
             return MALLOC_ERROR;
         }
 

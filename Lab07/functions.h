@@ -15,7 +15,7 @@ enum ErrorCodes {
 };
 
 int minSysCalc(char *word, int len);
-long long anyToDes(char *word, int length, int sysCalc);
+long long anyToDes(char *word, int length, int sysCalc, long long *result);
 void printNumber(char *number, int length, FILE *fileOutput);
 int solution(FILE *fileInput, FILE *fileOutput);
 
