@@ -9,7 +9,7 @@ double trapezoidalIntegration(double (*func)(double), double eps) {
     
     do {
         previous = result;
-        result = (func(0.0) + func(1.0)) / 2.0;
+        result = (func(0.0 + eps) + func(1.0 - eps)) / 2.0;
         h = 1.0 / n;
         
         for (int i = 1; i < n; i++) {
