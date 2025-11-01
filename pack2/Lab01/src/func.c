@@ -22,7 +22,6 @@ bool primeDividers(int number, int base){
             while(tempBase % i == 0){
                 tempBase /= i;
             }
-
             while(temp % i == 0){
                 temp /= i;
             }

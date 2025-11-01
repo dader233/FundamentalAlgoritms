@@ -1,0 +1,8 @@
+1 Ivan Petrov CS-101 5 4 5 4 5
+2 Maria Ivanova MATH-202 4 5 4 5 4
+3 Alexey Smirnov PHYS-301 3 4 3 4 3
+4 Anna Volkova CS-101 5 5 5 5 5
+5 Dmitry Orlov MATH-202 4 4 4 4 4
+6 Elena Petrova PHYS-301 3 3 3 3 3
+7 Sergey Kuznetsov CS-101 5 4 4 5 4
+8 Olga Semenova MATH-202 4 5 5 4 5
